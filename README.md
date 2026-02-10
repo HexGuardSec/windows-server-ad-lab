@@ -58,11 +58,12 @@ windows-server-ad-lab/
 ├── README.md
 ├── windows-server-setup/
 │   ├── screenshots/
-│   └── notes.md
+│   ├── network-and-base-config.md
+│   └── README.md
 │
 ├── active-directory-setup/
 │   ├── screenshots/
-│   └── notes.md
+│   └── README.md
 │
 ├── group-policy-setup/
 │   ├── screenshots/
