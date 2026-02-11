@@ -1,83 +1,162 @@
-# 🧩 Windows Server Base Configuration & Network Setup
+# 🧩 Windows Server Installation & Base Configuration
 
-This document describes the post-installation base configuration performed on the Windows Server before deploying Active Directory Domain Services.
+This document describes the installation and initial configuration of Windows Server 2022 before deploying Active Directory Domain Services.
 
-The objective of this step is to ensure system stability, network predictability, and compliance with enterprise best practices.
-
----
-
-## 🖥️ Server Naming Convention
-
-**Hostname:** `SRV-DC01`
-
-📸 Screenshots:
-- `07-computer-name.png`
-- `08-rename-server.png`
-
-### Rationale
-A clear and consistent naming convention is essential in enterprise environments.
-The chosen hostname follows a scalable pattern:
-
-- `SRV` → Server
-- `DC` → Domain Controller (future role)
-- `01` → First domain controller
-
-Renaming the server at this stage prevents issues that may occur if the hostname is changed after Active Directory installation.
+The goal of this phase is to build a stable, secure, and enterprise-ready foundation.
 
 ---
 
-## 🌐 Network Configuration (Static IP)
+# 🪟 Windows Server Installation
 
-**IP Address:** `192.168.142.10`  
-**Subnet Mask:** `255.255.255.0`  
-**Default Gateway:** `192.168.142.1`  
-**Preferred DNS:** `127.0.0.1`
+## 1️⃣ Edition Selection
 
-📸 Screenshots:
-- `09-ipv4-configuration.png`
-- `10-ip-static-confirmation.png`
-
-### Rationale
-A Domain Controller must use a static IP address to ensure reliable name resolution and authentication services.
-
-The DNS server is configured to point to itself, which is a standard practice once the server hosts Active Directory-integrated DNS.
-
----
-
-## 🕒 Time Zone & System Clock
-
-**Time Zone:** UTC+01:00 (Paris)
+Windows Server 2022 Standard (Desktop Experience) was selected.
 
 📸 Screenshot:
-- `11-timezone-settings.png`
+- `screenshots/installation/01-edition-selection.png`
 
 ### Rationale
-Active Directory relies heavily on time synchronization for Kerberos authentication.
-Ensuring correct time zone and system clock configuration prevents authentication and replication issues.
+
+Desktop Experience was chosen to facilitate administration, documentation, and learning.  
+Server Core is typically used in hardened production environments.
 
 ---
 
-## 🔍 Post-Configuration Validation
+## 2️⃣ Installation Type
 
-📸 Screenshots:
-- `12-server-manager-clean.png`
-- `13-ipconfig-validation.png`
+A clean installation was performed using the custom installation option.
 
-### Validation Checklist
-- Server Manager loads without errors
-- Server hostname is correctly applied
-- Network configuration is persistent
-- DNS settings are correctly configured
-
-These checks confirm that the server is properly prepared for Active Directory Domain Services installation.
+📸 Screenshot:
+- `screenshots/installation/02-installation-type.png`
 
 ---
 
-## ✅ Configuration Status
+## 3️⃣ Disk Selection
 
-✔ Server renamed and rebooted  
-✔ Static IP and DNS configured  
-✔ Time zone correctly set  
-✔ System validated and ready  
+The default Windows partitioning scheme was used.
 
-The next step will focus on installing and configuring **Active Directory Domain Services (AD DS)**.
+📸 Screenshot:
+- `screenshots/installation/03-disk-selection.png`
+
+### Rationale
+
+Default partitioning is standard practice for small to medium business deployments.
+
+---
+
+## 4️⃣ Administrator Account Configuration
+
+A strong password was set for the built-in local Administrator account.
+
+📸 Screenshot:
+- `screenshots/installation/04-administrator-password.png`
+
+---
+
+## 5️⃣ First Login
+
+Successful login using the local Administrator account.
+
+📸 Screenshot:
+- `screenshots/installation/05-first-login.png`
+
+---
+
+## 6️⃣ Initial Server Manager Check
+
+Server Manager launched successfully with no critical errors.
+
+📸 Screenshot:
+- `screenshots/installation/06-server-manager.png`
+
+---
+
+# ⚙️ Base System Configuration
+
+## 1️⃣ Server Renaming
+
+Hostname configured as:
+
+`SRV-DC01`
+
+📸 Screenshot:
+- `screenshots/base-config/01-rename-server.png`
+
+### Rationale
+
+Using a structured naming convention ensures scalability and clarity in enterprise environments.
+
+---
+
+## 2️⃣ IPv4 Configuration
+
+Network settings were manually configured.
+
+📸 Screenshot:
+- `screenshots/base-config/02-ipv4-configuration.png`
+
+---
+
+## 3️⃣ Static IP Confirmation
+
+Static IP configuration validated.
+
+📸 Screenshot:
+- `screenshots/base-config/03-ip-static-confirmation.png`
+
+### Configuration Used
+
+- IP Address: 192.168.142.10  
+- Subnet Mask: 255.255.255.0  
+- Default Gateway: 192.168.142.1  
+- Preferred DNS: 127.0.0.1  
+
+### Rationale
+
+Domain Controllers must use a static IP address.  
+Active Directory depends entirely on DNS for authentication and service discovery.
+
+---
+
+## 4️⃣ Time Zone Configuration
+
+Time zone configured to match the deployment region.
+
+📸 Screenshot:
+- `screenshots/base-config/04-timezone-settings.png`
+
+### Rationale
+
+Kerberos authentication is time-sensitive. Incorrect time configuration can break domain authentication.
+
+---
+
+## 5️⃣ Network Validation
+
+Network configuration verified using `ipconfig /all`.
+
+📸 Screenshot:
+- `screenshots/base-config/05-ipconfig-validation.png`
+
+---
+
+## 6️⃣ Final Server Validation
+
+Final verification in Server Manager after configuration.
+
+📸 Screenshot:
+- `screenshots/base-config/06-server-manager-clean.png`
+
+---
+
+# ✅ Status Summary
+
+✔ Windows Server installed  
+✔ Local Administrator secured  
+✔ Server renamed  
+✔ Static IP configured  
+✔ DNS prepared  
+✔ Time synchronized  
+✔ System validated  
+
+The server is now fully prepared for Active Directory Domain Services deployment.
