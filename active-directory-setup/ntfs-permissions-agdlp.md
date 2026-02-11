@@ -60,7 +60,7 @@ Each Domain Local Group was granted:
 Permission: Modify  
 
 📸 Screenshot:
-- `screenshots/ntfs-agdlp/04-ntfs-permissions.png`
+- `screenshots/ntfs-agdlp/04-ntfs-permissions-it.png`
 
 ---
 
