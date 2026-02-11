@@ -63,20 +63,19 @@ windows-server-ad-lab/
 │
 ├── active-directory-setup/
 │   ├── screenshots/
+│   ├── ou-structure.md
+│   ├── users-and-groups.md
 │   └── README.md
 │
 ├── group-policy-setup/
-│   ├── screenshots/
-│   └── notes.md
+│   ├── ??
+│   └──??
 │
 ├── scripts/
-│   └── powershell/
+│   └── ??
 │
-├── troubleshooting/
-│   └── issues-and-fixes.md
-│
-└── notes/
-└── general-notes.md
+└── troubleshooting/
+    └── ??
 
 ```
 
