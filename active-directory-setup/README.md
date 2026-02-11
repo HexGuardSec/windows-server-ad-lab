@@ -1,144 +1,74 @@
-# 🧩 Active Directory Domain Services (AD DS) Setup
+# 🧩 Active Directory Domain Services Implementation
 
-This document describes the installation and configuration of Active Directory Domain Services (AD DS) on the Windows Server used in this lab.
+This section documents the deployment and configuration of Active Directory Domain Services (AD DS) within the enterprise lab environment.
 
-The objective of this step is to deploy a functional and stable Active Directory domain, following enterprise best practices, and to validate all critical services after installation.
-
----
-
-## 🎯 Objectives
-
-- Promote the server to a Domain Controller
-- Create a new Active Directory forest and domain
-- Integrate DNS with Active Directory
-- Validate domain functionality after installation
-
-This step represents the core foundation of any Windows enterprise infrastructure.
+The objective is to simulate a real-world domain infrastructure following Microsoft best practices.
 
 ---
 
-## 🛠️ AD DS Role Installation
+# 📌 Modules Covered
 
-The **Active Directory Domain Services** role was installed using Server Manager.
+## 1️⃣ AD DS Installation
+- Role installation
+- Domain Controller promotion
+- Forest creation
+- DNS integration
+- Post-install validation
 
-📸 Screenshots:
-- `01-adds-role-selection.png`
-- `02-adds-install-confirmation.png`
-
-### Rationale
-Installing the AD DS role prepares the server to host directory services but does not yet create a domain.
-This separation between role installation and domain promotion reflects the real deployment process in enterprise environments.
-
----
-
-## 🏗️ Domain Controller Promotion
-
-After the role installation, the server was promoted to a Domain Controller.
-
-**Deployment option:** Add a new forest  
-**Domain name:** `corp.local`
-
-📸 Screenshots:
-- `03-new-forest-and-domain-name`
-
-### Rationale
-A new forest was created to simulate a fresh enterprise environment.
-The `corp.local` domain name is commonly used in lab and internal environments and clearly represents a corporate domain.
+📄 See: `adds-installation.md`
 
 ---
 
-## ⚙️ Domain Controller Options
+## 2️⃣ Organizational Unit Structure
+- Enterprise OU hierarchy
+- Department separation
+- Computers segregation
 
-**Forest functional level:** Windows Server 2016 or higher  
-**Domain functional level:** Windows Server 2016 or higher  
-**Roles enabled:**
-- DNS Server
-- Global Catalog
-
-**RODC:** Disabled  
-**DSRM password:** Configured securely
-
-📸 Screenshot:
-- `04-domain-controller-options.png`
-
-### Rationale
-Modern functional levels ensure compatibility with current Windows features.
-DNS integration is mandatory for Active Directory, and the Global Catalog is required for authentication and directory searches.
+📄 See: `ou-structure.md`
 
 ---
 
-## 🌐 DNS Configuration
+## 3️⃣ Users and Security Groups
+- Department-based user creation
+- Global Security Groups
+- Group membership assignment
 
-During the promotion process, DNS delegation warnings were displayed.
-
-📸 Screenshot:
-- `05-dns-delegation-warning.png`
-
-### Rationale
-DNS delegation warnings are expected when creating a new forest in a lab or standalone environment.
-The DNS zone is created locally and integrated with Active Directory.
+📄 See: `users-and-groups.md`
 
 ---
 
-## 🧾 NetBIOS & Database Paths
+## 4️⃣ Default Container Redirection
+- Redirection of default Computers container
+- Preparation for proper GPO targeting
 
-**NetBIOS name:** Automatically assigned (CORP)  
-**Database, logs, SYSVOL paths:** Default locations
-
-📸 Screenshots:
-- `06-netbios-name.png`
-- `07-adds-paths.png`
-
-### Rationale
-Default NetBIOS naming and paths are standard for small to medium business environments.
-Custom paths are typically used only in large or highly specialized infrastructures.
+📄 See: `redirection-default-container.md`
 
 ---
 
-## 🔄 Installation Review & Reboot
+## 5️⃣ NTFS Permissions & AGDLP
+- Domain Local Groups
+- Nested group structure
+- NTFS permission enforcement
+- Access validation testing
 
-The configuration was reviewed before starting the installation.
-The server rebooted automatically after the promotion process.
-
-📸 Screenshots:
-- `08-adds-review.png`
-- `09-domain-login`
-
----
-
-## ✅ Post-Installation Validation
-
-After reboot, several checks were performed to confirm that Active Directory was fully operational.
-
-📸 Screenshots:
-- `10-adds-server-manager.png`
-- `11-dns-zone.png`
-- `12-aduc-domain.png`
-
-### Validation Steps
-- Successful login using `CORP\Administrator`
-- AD DS role running without errors in Server Manager
-- DNS zone `corp.local` present and populated
-- Domain visible and accessible in Active Directory Users and Computers (ADUC)
-
-These checks confirm that the domain controller is functioning correctly.
+📄 See: `ntfs-permissions-agdlp.md`
 
 ---
 
-## ✔️ Status
+# 🧠 Enterprise Concepts Implemented
 
-✔ Active Directory Domain Services installed  
-✔ Domain Controller successfully deployed  
-✔ DNS integrated and operational  
-✔ Domain validated and ready for administration  
+- AD-integrated DNS
+- OU-based management
+- AGDLP model
+- Permission inheritance management
+- Share vs NTFS permission separation
+- Structured access control
 
 ---
 
-## ⏭️ Next Steps
+# 🚀 Next Phase
 
-The next phase of this lab will focus on:
-- Designing a proper Organizational Unit (OU) structure
-- Creating users and security groups
-- Applying Group Policy Objects (GPO)
-
-This will simulate real-world Active Directory administration tasks in an enterprise environment.
+- Group Policy Objects implementation
+- Security baselines
+- Advanced delegation
+- PowerShell automation
