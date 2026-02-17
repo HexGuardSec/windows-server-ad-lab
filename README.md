@@ -29,10 +29,10 @@ This lab is designed to evolve progressively, from basic setup to more advanced 
 |---|------|-------------|
 | 1 | Windows Server Setup | Clean installation and base configuration |
 | 2 | Active Directory | Domain creation and domain controller promotion |
-| 3 | DNS | Integrated DNS configuration and validation |
+| 3 | Group Policy | GPO creation, linking, and testing |
 | 4 | Users & Groups | AD users, groups, and OU structure |
 | 5 | Client Integration | Windows 11 client joined to the domain |
-| 6 | Group Policy | GPO creation, linking, and testing |
+| 6 | DNS | Integrated DNS configuration and validation |
 | 7 | Permissions | NTFS permissions and access control |
 | 8 | Automation | PowerShell scripts for admin tasks |
 
