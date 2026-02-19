@@ -58,18 +58,23 @@ windows-server-ad-lab/
 ├── README.md
 ├── windows-server-setup/
 │   ├── screenshots/
-│   ├── network-and-base-config.md
-│   └── README.md
+│   └── network-and-base-config.md
 │
 ├── active-directory-setup/
 │   ├── screenshots/
 │   ├── ou-structure.md
+│   ├── adds-installation.md
+│   ├── ntfs-permissions-agdlp.md
+│   ├── redirection-default-container.md
 │   ├── users-and-groups.md
 │   └── README.md
 │
 ├── group-policy-setup/
-│   ├── ??
-│   └──??
+│   ├── screenshots/
+│   ├── drive-mapping.md
+│   ├── workstation-device-restrictions.md
+│   ├── workstation-security-baseline.md
+│   └── README.md
 │
 ├── scripts/
 │   └── ??
