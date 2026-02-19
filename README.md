@@ -75,7 +75,9 @@ windows-server-ad-lab/
 │   └── ??
 │
 └── troubleshooting/
-    └── ??
+    ├── 01-gpo-not-applying.md
+    ├── 02-drive-mapping-not-working.md
+    └── 03-user-profile-temporary.md
 
 ```
 
