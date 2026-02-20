@@ -77,7 +77,11 @@ windows-server-ad-lab/
 │   └── README.md
 │
 ├── scripts/
-│   └── ??
+│   └── active-directory-management/
+│        ├── README.md
+│        ├── create-single-user.ps1
+│        ├── bulk-import-users.ps1
+│        └── manage-user.ps1
 │
 └── troubleshooting/
     ├── 01-gpo-not-applying.md
