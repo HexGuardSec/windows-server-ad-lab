@@ -44,7 +44,7 @@ This lab focuses on architecture, access control, security, automation, and trou
 ## 🗂️ Active Directory Architecture
 
 ### Organizational Unit Design
-
+```
 
 Company
 ├── Users
@@ -63,7 +63,7 @@ Company
 │
 └── Disabled_Objects
 
-
+```
 This structure separates identities, devices, and security objects to ensure clarity, scalability, and proper policy targeting.
 
 ---
