@@ -14,7 +14,7 @@ This project simulates a Small-to-Medium Enterprise (SME) Active Directory envir
 
 The objective is to design and implement a structured, secure, and scalable AD infrastructure following real-world best practices expected from a **Junior IT Support / System Administrator**.
 
-This lab focuses on architecture, access control, security, automation, and troubleshooting.
+This lab focuses on architecture, access control, security, networking, automation, and troubleshooting.
 
 ---
 
@@ -25,6 +25,9 @@ This lab focuses on architecture, access control, security, automation, and trou
 - Secure departmental file shares using NTFS permissions
 - Configure centralized drive mapping via GPO
 - Apply security policies to users and computers
+- Implement DHCP and DNS infrastructure
+- Monitor authentication and security events (Audit Policy)
+- Delegate administrative tasks securely
 - Automate administrative tasks using PowerShell
 - Document troubleshooting scenarios like in a real IT environment
 
@@ -35,16 +38,55 @@ This lab focuses on architecture, access control, security, automation, and trou
 - Hypervisor: VMware Workstation
 - Server OS: Windows Server 2022 (Domain Controller)
 - Client OS: Windows 11 (Domain Joined)
-- Network: Internal LAN
-- IP Configuration: Static IP on Domain Controller
+- Network: Host-only internal network
+- Services:
+  - Active Directory Domain Services (AD DS)
+  - DNS (integrated with AD)
+  - DHCP Server
 - Domain: `corp.local`
+
+---
+
+## 🌐 Network & Infrastructure
+
+### DNS (Critical for Active Directory)
+
+Active Directory relies entirely on DNS for:
+
+- Domain Controller discovery
+- Authentication (LDAP / Kerberos)
+- Service location (SRV records)
+
+Validation commands:
+
+
+nslookup corp.local
+nslookup -type=SRV _ldap._tcp.dc._msdcs.corp.local
+
+
+---
+
+### DHCP Configuration
+
+DHCP is used to dynamically assign network configuration to clients.
+
+Scope:
+
+- Range: 192.168.10.100 – 192.168.10.200
+- Subnet: 255.255.255.0
+- DNS: Domain Controller (192.168.10.10)
+- Gateway: 192.168.10.1
+
+⚠️ Important:
+
+A misconfigured DNS option in DHCP can completely break Active Directory functionality.
 
 ---
 
 ## 🗂️ Active Directory Architecture
 
 ### Organizational Unit Design
-```
+
 
 Company
 ├── Users
@@ -61,16 +103,19 @@ Company
 │ ├── Global
 │ └── DomainLocal
 │
+├── Admin
+│ └── Admin Accounts
+│
+├── Service Accounts
+│
 └── Disabled_Objects
 
-```
-This structure separates identities, devices, and security objects to ensure clarity, scalability, and proper policy targeting.
+
+This structure ensures scalability, security, and proper GPO targeting.
 
 ---
 
 ## 🔐 Access Control Model (AGDLP)
-
-This lab implements the industry-standard **AGDLP model**:
 
 **Accounts → Global → Domain Local → Permissions**
 
@@ -86,23 +131,16 @@ DL_HR_Share_RW
 NTFS Modify permission on HR folder
 
 
-### Why AGDLP?
+### Benefits
 
 - No direct user-to-permission assignment
-- Scalable permission management
+- Scalable access management
 - Easier auditing and delegation
-- Enterprise best practice
+- Enterprise standard
 
 ---
 
 ## 📁 File Server & Permission Strategy
-
-Each department has a dedicated secured folder:
-
-- HR
-- IT
-- Sales
-- Management
 
 ### Share Permissions
 
@@ -110,11 +148,9 @@ Each department has a dedicated secured folder:
 Everyone → Full Control
 
 
-(Access control handled exclusively via NTFS)
-
 ### NTFS Permissions
 
-Permissions are assigned only to **Domain Local groups**, not users or Global groups.
+Assigned only to **Domain Local groups**
 
 Example:
 
@@ -122,47 +158,79 @@ Example:
 DL_HR_Share_RW → Modify
 
 
-This ensures centralized and clean permission management.
-
 ---
 
 ## 🧭 Drive Mapping Strategy
 
-A single GPO is used:
+Single GPO used:
 
 
 GPO - Department Drive Mapping
 
 
-Using:
+Configured with:
 
 - Group Policy Preferences
 - Action: Update
-- Item-Level Targeting (Security Group based)
-- Run in logged-on user’s security context
+- Item-Level Targeting (Security Groups)
+- User security context
 
-### Result:
+### Result
 
 - HR → H:
 - IT → I:
 - Sales → S:
 - Management → M:
 
-Users only see and access their own department drive.
-
 ---
 
 ## 🛡️ Group Policy Implementation
 
 ### User Security Baseline
+
 - Screen lock timeout
 - Password-protected screensaver
 - Control Panel restrictions
 
 ### Workstation Security Baseline
+
 - Device restrictions
 - Security configurations
-- Computer-level policy enforcement
+
+---
+
+## 🔐 Delegation of Control
+
+Helpdesk permissions were delegated using a security group:
+
+
+GG_Helpdesk
+
+
+Allowed actions:
+
+- Reset user passwords
+- Force password change at next logon
+
+This avoids overuse of Domain Admin privileges and follows the **principle of least privilege**.
+
+---
+
+## 🔍 Audit Policy & Security Monitoring
+
+Audit policies were configured to monitor authentication activity.
+
+### Key Events
+
+- 4768 → Kerberos authentication (successful logon)
+- 4771 → Kerberos pre-authentication failed
+- 4624 → Successful logon
+- 4625 → Failed logon
+- 4724 → Password reset
+
+### Key Insight
+
+In Active Directory environments, authentication is handled by **Kerberos**, not only classic logon events.
 
 ---
 
@@ -170,66 +238,55 @@ Users only see and access their own department drive.
 
 PowerShell scripts included for:
 
-- Single user creation
-- Bulk user import via CSV
-- Account management (enable/disable/reset password)
-
-Scripts are structured and documented in the `/scripts` directory.
+- User creation
+- Bulk import (CSV)
+- Account management
 
 ---
 
 ## 🧪 Troubleshooting Scenarios
 
-Documented real-world issues encountered during the lab:
+Real-world issues documented:
 
-- Drive mapping not applying due to group token refresh
-- Security context misconfiguration
-- NTFS vs Share permission conflicts
-- Temporary user profile issue
-- GPO not applying correctly
-
-Each issue includes diagnostic steps and resolution.
+- GPO not applying
+- Drive mapping issues
+- NTFS vs Share conflicts
+- DHCP misconfiguration (wrong DNS)
+- Domain authentication issues
+- Broken secure channel
 
 ---
 
 ## 🧠 Skills Demonstrated
 
-- Windows Server installation & configuration
 - Active Directory architecture design
-- OU structuring and object management
-- AGDLP permission model
-- NTFS vs Share permission control
-- Group Policy Objects (User & Computer)
-- Group Policy Preferences
+- DNS & DHCP integration
+- GPO (User & Computer)
+- Security hardening
+- Delegation of control
+- Kerberos authentication understanding
+- Troubleshooting enterprise environments
 - PowerShell automation
-- Troubleshooting domain & authentication issues
 
 ---
 
 ## 🎯 Target Role
 
-This project demonstrates practical skills aligned with:
-
 - Junior IT Support
 - Junior System Administrator
 - Internal IT Technician
-- Data Center Technician (Windows environments)
-
-The focus is on structured implementation, not lab shortcuts.
 
 ---
 
 ## 📌 Project Status
 
-🔧 In Progress – Continuously evolving with new features, automation, and enterprise-level improvements.
+🔧 In Progress – continuously evolving with enterprise features and improvements.
 
 ---
 
 ## 📘 Purpose of This Repository
 
-This repository serves as:
-
-- A hands-on enterprise simulation lab
-- A technical documentation portfolio
-- A demonstration of real-world Windows administration practices
-- A structured learning progression toward professional IT roles
+- Hands-on enterprise simulation
+- Technical portfolio
+- Real-world IT practices
+- Structured learning progression
