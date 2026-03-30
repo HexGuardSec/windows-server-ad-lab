@@ -86,30 +86,32 @@ A misconfigured DNS option in DHCP can completely break Active Directory functio
 ## 🗂️ Active Directory Architecture
 
 ### Organizational Unit Design
-
+```
 
 Company
-└── Users
-  ├── HR
-  ├── IT
-  ├── Sales
-  └── Management
-  
+│
+├── Users
+    ├── HR
+    ├── IT     
+    ├──Sales    
+    └── Management
+│
 └── Computers
-  ├── Workstations
-  └── Servers
-
+    ├── Workstations
+    └── Servers
+│
 └── Groups
-  ├── Global
-  └── DomainLocal
-
+    ├── Global
+    └── DomainLocal
+│
 └── Admin
-  └── Admin Accounts
-
+    └── Admin Accounts
+│
 └── Service Accounts
- 
+│
 └── Disabled_Objects
 
+```
 
 This structure ensures scalability, security, and proper GPO targeting.
 
