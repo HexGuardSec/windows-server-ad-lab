@@ -89,25 +89,25 @@ A misconfigured DNS option in DHCP can completely break Active Directory functio
 
 
 Company
-├── Users
-│ ├── HR
-│ ├── IT
-│ ├── Sales
-│ └── Management
-│
-├── Computers
-│ ├── Workstations
-│ └── Servers
-│
-├── Groups
-│ ├── Global
-│ └── DomainLocal
-│
-├── Admin
-│ └── Admin Accounts
-│
-├── Service Accounts
-│
+└── Users
+  ├── HR
+  ├── IT
+  ├── Sales
+  └── Management
+  
+└── Computers
+  ├── Workstations
+  └── Servers
+
+└── Groups
+  ├── Global
+  └── DomainLocal
+
+└── Admin
+  └── Admin Accounts
+
+└── Service Accounts
+ 
 └── Disabled_Objects
 
 
